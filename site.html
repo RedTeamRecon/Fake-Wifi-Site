@@ -1,196 +1,419 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Awareness Interactive Training</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --warning-bg: #fef3c7;
-            --warning-text: #92400e;
-            --warning-border: #f59e0b;
-            --text-main: #1f2937;
-            --bg-canvas: #f3f4f6;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Training Simulator</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --warning:#f59e0b;
+    --warning-bg:#fef3c7;
+    --danger:#dc2626;
+    --sidebar:#1f2937;
+    --bg:#f3f4f6;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-canvas);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .training-card {
-            background: #ffffff;
-            padding: 40px;
-            width: 100%;
-            max-width: 450px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
+body{
+    font-family:Segoe UI, Arial, sans-serif;
+    background:var(--bg);
+    color:#111827;
+}
 
-        .banner-alert {
-            background-color: var(--warning-bg);
-            color: var(--warning-text);
-            border: 1px solid var(--warning-border);
-            padding: 12px;
-            margin-bottom: 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+.topbar{
+    background:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
 
-        h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #111827;
-        }
+.logo{
+    font-size:22px;
+    font-weight:bold;
+}
 
-        .description {
-            font-size: 15px;
-            color: #4b5563;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
+.search{
+    display:flex;
+    gap:10px;
+}
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+.search input{
+    padding:10px;
+    width:300px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
 
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: #374151;
-        }
+.search button{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
 
-        input {
-            width: 100%;
-            padding: 10px 14px;
-            font-size: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
+.layout{
+    display:flex;
+    min-height:calc(100vh - 70px);
+}
 
-        input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
+.sidebar{
+    width:240px;
+    background:var(--sidebar);
+    color:white;
+    padding:20px;
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 8px;
-        }
+.sidebar h3{
+    margin-bottom:15px;
+}
 
-        button:hover {
-            background-color: var(--primary-hover);
-        }
+.sidebar button{
+    width:100%;
+    margin-bottom:10px;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#374151;
+    color:white;
+}
 
-        .analysis-box {
-            margin-top: 24px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 20px;
-        }
+.content{
+    flex:1;
+    padding:25px;
+}
 
-        .analysis-box h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 12px;
-        }
+.banner{
+    background:var(--warning-bg);
+    border:1px solid var(--warning);
+    color:#92400e;
+    padding:15px;
+    border-radius:8px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
 
-        .analysis-box ul {
-            list-style-type: none;
-        }
+.card{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
 
-        .analysis-box li {
-            font-size: 14px;
-            color: #4b5563;
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
+.card h2{
+    margin-bottom:10px;
+}
 
-        .analysis-box li::before {
-            content: "•";
-            color: var(--warning-border);
-            font-weight: bold;
-            font-size: 18px;
-            position: absolute;
-            left: 0;
-            top: -2px;
-        }
-    </style>
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+}
+
+.form-group input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+.dropdown{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+}
+
+.primary-btn{
+    width:100%;
+    padding:12px;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.primary-btn:hover{
+    background:var(--primary-hover);
+}
+
+.notice{
+    background:#fee2e2;
+    border:1px solid #ef4444;
+    color:#991b1b;
+    padding:12px;
+    border-radius:6px;
+    margin-top:10px;
+}
+
+.analyze-btn{
+    margin-top:10px;
+    padding:10px;
+    background:#4b5563;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.results{
+    margin-top:20px;
+}
+
+.analysis-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.analysis-box h3{
+    margin-bottom:10px;
+}
+
+.analysis-box ul{
+    padding-left:20px;
+}
+
+.analysis-box li{
+    margin-bottom:10px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="training-card">
-    <div class="banner-alert">
-        TRAINING DEMO – NOT A REAL LOGIN PAGE
+<div class="topbar">
+    <div class="logo">Training Portal Simulator</div>
+
+    <div class="search">
+        <input type="text"
+               placeholder="Search company resources..."
+               disabled>
+        <button onclick="showSearchTip()">Analyze Search Bar</button>
+    </div>
+</div>
+
+<div class="layout">
+
+    <div class="sidebar">
+        <h3>Navigation</h3>
+
+        <button onclick="showSidebarTip()">Dashboard</button>
+        <button onclick="showSidebarTip()">Documents</button>
+        <button onclick="showSidebarTip()">Payroll</button>
+        <button onclick="showSidebarTip()">Support</button>
+        <button onclick="showSidebarTip()">Settings</button>
     </div>
 
-    <h2>Phishing Awareness Exercise</h2>
-    <p class="description">Use this interactive simulator to learn how to identify common deceptive indicators found on malicious websites.</p>
+    <div class="content">
 
-    <div class="form-group">
-        <label for="username">Sample Username Field</label>
-        <input type="text" id="username" placeholder="name@company.com" disabled>
+        <div class="banner">
+            TRAINING DEMO — NOT A REAL WEBSITE
+        </div>
+
+        <div class="card">
+            <h2>Phishing Awareness Exercise</h2>
+
+            <p>
+                This simulator demonstrates how convincing a malicious
+                website can appear while teaching users what warning
+                signs to investigate.
+            </p>
+        </div>
+
+        <div class="card">
+
+            <h2>Sample Login Form</h2>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="text"
+                       placeholder="employee@company.com"
+                       disabled>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password"
+                       placeholder="********"
+                       disabled>
+            </div>
+
+            <button class="primary-btn"
+                    onclick="showLoginTip()">
+                Analyze Login Form
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Account Menu</h2>
+
+            <select class="dropdown" disabled>
+                <option>My Account</option>
+                <option>Profile</option>
+                <option>Security Settings</option>
+                <option>Logout</option>
+            </select>
+
+            <button class="analyze-btn"
+                    onclick="showDropdownTip()">
+                Analyze Dropdown
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Security Indicators</h2>
+
+            <p>🔒 Secure Connection</p>
+            <p>✓ Verified Portal</p>
+
+            <button class="analyze-btn"
+                    onclick="showSecurityTip()">
+                Analyze Security Claims
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Notifications</h2>
+
+            <div class="notice">
+                Urgent: Verify your account within 24 hours
+                to avoid service interruption.
+            </div>
+
+            <button class="analyze-btn"
+                    onclick="showUrgencyTip()">
+                Analyze Notification
+            </button>
+
+        </div>
+
+        <div id="results" class="results"></div>
+
     </div>
 
-    <div class="form-group">
-        <label for="password">Sample Password Field</label>
-        <input type="password" id="password" placeholder="••••••••" disabled>
-    </div>
-
-    <button onclick="showTips()">Analyze This Page Layout</button>
-
-    <div id="results"></div>
 </div>
 
 <script>
-function showTips() {
-    document.getElementById("results").innerHTML = `
-        <div class="analysis-box">
-            <h3>Red Flags to Look For:</h3>
-            <ul>
-                <li><strong>Unexpected login requests:</strong> Always verify why you are being asked to authenticate, especially from unexpected links.</li>
-                <li><strong>Misspelled domains:</strong> Attackers often use look-alike domains (typosquatting) to deceive users.</li>
-                <li><strong>Urgent or coercive language:</strong> Messages creating false urgency often try to bypass critical thinking.</li>
-                <li><strong>Lack of valid security markers:</strong> Check the browser address bar for correct certificates and matching domain contexts.</li>
-            </ul>
-        </div>
+
+function displayAnalysis(title, items){
+
+    let html = `
+    <div class="analysis-box">
+        <h3>${title}</h3>
+        <ul>
     `;
+
+    items.forEach(item=>{
+        html += `<li>${item}</li>`;
+    });
+
+    html += `
+        </ul>
+    </div>
+    `;
+
+    document.getElementById("results").innerHTML = html;
 }
+
+function showSearchTip(){
+    displayAnalysis(
+        "Search Bar Analysis",
+        [
+            "Attackers often recreate familiar search interfaces.",
+            "Visual appearance alone does not prove legitimacy.",
+            "Always verify the URL before entering information.",
+            "A realistic layout can increase user trust."
+        ]
+    );
+}
+
+function showSidebarTip(){
+    displayAnalysis(
+        "Navigation Menu Analysis",
+        [
+            "Fraudulent sites often copy navigation structures from real organizations.",
+            "Menus can create a false sense of legitimacy.",
+            "Users should focus on the domain, not the design.",
+            "Well-designed interfaces can still be malicious."
+        ]
+    );
+}
+
+function showLoginTip(){
+    displayAnalysis(
+        "Login Form Analysis",
+        [
+            "Credential forms are common phishing targets.",
+            "Unexpected login requests should be verified.",
+            "Never trust a login page solely because it looks familiar.",
+            "Verify the website address and certificate information."
+        ]
+    );
+}
+
+function showDropdownTip(){
+    displayAnalysis(
+        "Dropdown Analysis",
+        [
+            "Attackers frequently imitate account menus.",
+            "Copied interface elements increase perceived trust.",
+            "Users should verify where they are before interacting.",
+            "Professional appearance does not equal authenticity."
+        ]
+    );
+}
+
+function showSecurityTip(){
+    displayAnalysis(
+        "Security Indicator Analysis",
+        [
+            "Lock icons inside a webpage can be easily faked.",
+            "Trust browser security indicators rather than page graphics.",
+            "Security badges are not proof of legitimacy.",
+            "Always inspect the actual domain name."
+        ]
+    );
+}
+
+function showUrgencyTip(){
+    displayAnalysis(
+        "Urgency Tactic Analysis",
+        [
+            "Urgency is one of the most common social engineering tactics.",
+            "Attackers pressure victims to act before thinking.",
+            "Threats of account suspension are frequently abused.",
+            "Verify requests through official communication channels."
+        ]
+    );
+}
+
 </script>
 
 </body>
 </html>
+```
