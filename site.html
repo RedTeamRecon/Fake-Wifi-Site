@@ -3,84 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Awareness Training Demo</title>
+    <title>Phishing Awareness Interactive Training</title>
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --warning-bg: #fef3c7;
+            --warning-text: #92400e;
+            --warning-border: #f59e0b;
+            --text-main: #1f2937;
+            --bg-canvas: #f3f4f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .container {
-            background: white;
-            padding: 30px;
-            width: 400px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,.2);
+        .training-card {
+            background: #ffffff;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .warning {
-            background: #ffeb3b;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            font-weight: bold;
+        .banner-alert {
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+            padding: 12px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .description {
+            font-size: 15px;
+            color: #4b5563;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #374151;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
+            padding: 10px 14px;
+            font-size: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            background: #006241;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: var(--primary-color);
             color: white;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
         }
 
-        .tips {
-            margin-top: 20px;
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .analysis-box {
+            margin-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+        }
+
+        .analysis-box h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .analysis-box ul {
+            list-style-type: none;
+        }
+
+        .analysis-box li {
             font-size: 14px;
+            color: #4b5563;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .analysis-box li::before {
+            content: "•";
+            color: var(--warning-border);
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            left: 0;
+            top: -2px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="warning">
+<div class="training-card">
+    <div class="banner-alert">
         TRAINING DEMO – NOT A REAL LOGIN PAGE
     </div>
 
     <h2>Phishing Awareness Exercise</h2>
+    <p class="description">Use this interactive simulator to learn how to identify common deceptive indicators found on malicious websites.</p>
 
-    <p>This page demonstrates common phishing techniques.</p>
+    <div class="form-group">
+        <label for="username">Sample Username Field</label>
+        <input type="text" id="username" placeholder="name@company.com" disabled>
+    </div>
 
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
+    <div class="form-group">
+        <label for="password">Sample Password Field</label>
+        <input type="password" id="password" placeholder="••••••••" disabled>
+    </div>
 
-    <button onclick="showTips()">Analyze This Page</button>
+    <button onclick="showTips()">Analyze This Page Layout</button>
 
-    <div id="results" class="tips"></div>
+    <div id="results"></div>
 </div>
 
 <script>
 function showTips() {
     document.getElementById("results").innerHTML = `
-        <h3>Red Flags to Look For:</h3>
-        <ul>
-            <li>Unexpected login requests</li>
-            <li>Misspelled domains</li>
-            <li>Urgent language demanding action</li>
-            <li>Requests for credentials or MFA codes</li>
-            <li>Lack of HTTPS or certificate issues</li>
-        </ul>
+        <div class="analysis-box">
+            <h3>Red Flags to Look For:</h3>
+            <ul>
+                <li><strong>Unexpected login requests:</strong> Always verify why you are being asked to authenticate, especially from unexpected links.</li>
+                <li><strong>Misspelled domains:</strong> Attackers often use look-alike domains (typosquatting) to deceive users.</li>
+                <li><strong>Urgent or coercive language:</strong> Messages creating false urgency often try to bypass critical thinking.</li>
+                <li><strong>Lack of valid security markers:</strong> Check the browser address bar for correct certificates and matching domain contexts.</li>
+            </ul>
+        </div>
     `;
 }
 </script>
