@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Training Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+        }
+
+        .warning {
+            background: #ffeb3b;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #006241;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tips {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="warning">
+        TRAINING DEMO – NOT A REAL LOGIN PAGE
+    </div>
+
+    <h2>Phishing Awareness Exercise</h2>
+
+    <p>This page demonstrates common phishing techniques.</p>
+
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+
+    <button onclick="showTips()">Analyze This Page</button>
+
+    <div id="results" class="tips"></div>
+</div>
+
+<script>
+function showTips() {
+    document.getElementById("results").innerHTML = `
+        <h3>Red Flags to Look For:</h3>
+        <ul>
+            <li>Unexpected login requests</li>
+            <li>Misspelled domains</li>
+            <li>Urgent language demanding action</li>
+            <li>Requests for credentials or MFA codes</li>
+            <li>Lack of HTTPS or certificate issues</li>
+        </ul>
+    `;
+}
+</script>
+
+</body>
+</html>
